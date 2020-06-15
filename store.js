@@ -34,19 +34,47 @@ function ready () {
       }
       updateCartTotal();
   }
+  let arr1=[];
+
   function addToCartClicked(e){
       let button=e.target;
       let shopItem=button.parentElement.parentElement;
       let title=shopItem.getElementsByClassName("shop-item-title")[0].innerHTML;
       //console.log(title);
       let price=shopItem.getElementsByClassName("shop-item-price")[0].innerHTML;
-      console.log(price);
+      //console.log(price);
       let imgSrc=shopItem.getElementsByClassName("shop-item-image")[0].src;
       //console.log(imgSrc);
+      let myObj=
+      {
+        title:title,
+        price:price,
+        src:imgSrc
+      }
+
+    arr.push(myObj);
+    localStorage.setItem('save-data',JSON.stringify(arr));
       addItemToCart(title,price,imgSrc);
       updateCartTotal();
   }
+
+    let saveLocal=JSON.stringify(localStorage.getItem('save-data'));
+    let arr=[];
+    if(localStorage.getItem('save-data')==null){
+        arr=[];
+    }
+    else{
+        arr=JSON.parse(localStorage.getItem('save-data'));
+        for(let i=0;i<arr.length;i++)
+        {
+            addItemToCart(arr[i].title,arr[i].price,arr[i].src);
+        }
+        updateCartTotal();
+    }
+
   function addItemToCart (title,price,imgSrc) {
+
+    //console.log(arr);
       let cartRow=document.createElement('div');
       cartRow.className='cart-row';
       let cartItems=document.getElementsByClassName('cart-items')[0];
