@@ -34,7 +34,6 @@ function ready () {
       }
       updateCartTotal();
   }
-  let arr1=[];
 
   function addToCartClicked(e){
       let button=e.target;
@@ -58,8 +57,8 @@ function ready () {
       updateCartTotal();
   }
 
+  let arr=[];
     let saveLocal=JSON.stringify(localStorage.getItem('save-data'));
-    let arr=[];
     if(localStorage.getItem('save-data')==null){
         arr=[];
     }
@@ -112,12 +111,16 @@ function ready () {
   function removeCartItem()
   {
     let removeBtn=document.querySelectorAll('.btn-danger');
-    removeBtn.forEach(btn => {
-        btn.addEventListener("click",(e)=>{
-            e.target.parentElement.parentElement.remove();
+    for(let i=0;i<removeBtn.length;i++){
+        let button=removeBtn[i];
+        button.addEventListener("click",function (e) {
+            let btnClicked=e.target;
+            arr.splice(btnClicked,1);
+            localStorage.setItem('save-data',JSON.stringify(arr));
+            btnClicked.parentElement.parentElement.remove();
             updateCartTotal();
-        });
-    });
+          })
+    }
   }
 function updateCartTotal()
 {
